@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Visual Docker</title>
+    <script src="../../static/login/jquery/jquery-3.3.1.js"></script>
+    <script>
+        function check(){
+              var ip = document.getElementById("ServerIP").value;
+              var port = document.getElementById("ServerPort").value;
+
+              $.ajax({
+                        type:'GET',
+                        data:{
+                             ip: ip,
+                             port:port
+                         },
+                        url:"{% url 'login:login' %}",
+                        success:function(data){
+                            if(data.msg == 'success'){
+                                sessionStorage.setItem('ip', ip);    // 保存数据到sessionStorage
+                                sessionStorage.setItem('port',port);
+                                sessionStorage.setItem('userid',data.userid);
+                                window.location.href = "{% url 'image:index' %}";
+                            }
+                            else{
+                                alert("login error");
+                            }
+                        }
+                    });
+          }
+
+    </script>
+</head>
+<body>
+    <div>
+        <form method="get">
+            <h1>Login</h1>
+            <div>
+                <label>Docker &nbsp; Server &nbsp; IP</label>
+                <input type="text" id="ServerIP" name="ServerIP" placeholder="Please Input Docker Server's IP"/>
+            </div>
+            <div>
+                <label>Docker &nbsp; Server &nbsp; Port</label>
+                <input type="text" id="ServerPort" name="ServerPort" placeholder="Please Input Docker Server's Port"/>
+            </div>
+            <button type="button" onclick="check()">Login</button>
+        </form>
+    </div>
+</body>
+</html>
