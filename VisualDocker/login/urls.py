@@ -5,5 +5,6 @@ app_name = 'login'   # 命名空间
 
 urlpatterns = [
     path('',views.index,name="index"),
-    path('/login',views.login,name="login"),
+    path('login/',views.login,name="login"),
+    path('clientInfo/',views.getClientInfo,name="getClientInfo"),
 ]
