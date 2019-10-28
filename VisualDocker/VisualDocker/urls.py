@@ -1,14 +1,26 @@
-from django.urls import path
-from . import views
+"""VisualDocker URL Configuration
 
-app_name = 'container'   # 命名空间
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/2.1/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import include,path
 
 urlpatterns = [
-    path('',views.index,name="index"),
-    path('list/',views.containerList,name="containerList"),
-    path('info/',views.containerInfo,name="containerInfo"),
-    path('run/',views.containerRun,name="containerRun"),
-    path('start/',views.containerStart,name="containerStart"),
-    path('stop/',views.containerStop,name="containerStop"),
-    path('reload/',views.containerReload,name="containerReload"),
+    path('',include('login.urls')),
+    path('container/',include('container.urls')),
+    path('image/',include('image.urls')),
+    path('network/',include('network.urls')),
+    path('volume/',include('volume.urls')),
+    path('admin/', admin.site.urls),
 ]

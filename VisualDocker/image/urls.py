@@ -5,4 +5,6 @@ app_name = 'image'   # 命名空间
 
 urlpatterns = [
     path('',views.index,name="index"),
+    path('list/',views.imageList,name="imageList"),
+    path('info/',views.imageInfo,name="imageInfo"),
 ]
