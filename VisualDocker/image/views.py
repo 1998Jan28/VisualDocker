@@ -76,7 +76,9 @@ def imagePull(request):
             repo = imageName+":latest"
         else:
             repo = imageName+":"+imageVersion
-        t = threading.Thread(target={image = client.images.pull(repo)})
+        def pullThread():
+            image = client.images.pull(repo)
+        t = threading.Thread(target=pullThread())
         t.start()
         res = "Pull image: "+repo+" ok, please reload page"
         return JsonResponse({'msg':res})
