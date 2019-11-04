@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 
 import docker
+import threading
 
 # Create your views here.
 
@@ -75,7 +76,8 @@ def imagePull(request):
             repo = imageName+":latest"
         else:
             repo = imageName+":"+imageVersion
-        image = client.images.pull(repo)
+        t = threading.Thread(target={image = client.images.pull(repo)})
+        t.start()
         res = "Pull image: "+repo+" ok, please reload page"
         return JsonResponse({'msg':res})
     except docker.errors.APIError:
@@ -88,7 +90,7 @@ def imageRemove(request):
         imageName = request.GET['imageName']
         if(imageName == ""):
             return JsonResponse({'msg':'None image to remove'})
-        client.remove(imageName)
+        client.images.remove(imageName)
         res = "Remove image: "+imageName+" ok, please reload page"
         return JsonResponse({'msg':res})
     except docker.errors.APIError:
