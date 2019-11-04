@@ -59,4 +59,31 @@ def imageInfo(request):
         return JsonResponse({'msg':'ConnectionFail'})  # 连接远程服务器失败
     return JsonResponse({'msg':'success','info':imageInfo})
 
+# 拉取镜像
+def imagePull(request):
+    try:
+        client = getClient(request)
+        imageName = request.GET['imageName']
+        imageVersion = request.GET['imageVersion']
+        if(imageVersion == ""):
+            repo = imageName+":latest"
+        else:
+            repo = imageName+":"+imageVersion
+        image = client.images.pull(repo)
+        res = "Pull image: "+repo+" ok, please reload page"
+        return JsonResponse({'msg':res})
+    except docker.errors.APIError:
+        return JsonResponse({'msg':'Image not found or wrong image name'})
 
+# 删除镜像
+def imageRemove(request):
+    try:
+        client = getClient(request)
+        imageName = request.GET['imageName']
+        if(imageName == ""):
+            return JsonResponse({'msg':'None image to remove'})
+        client.remove(imageName)
+        res = "Remove image: "+imageName+" ok, please reload page"
+        return JsonResponse({'msg':res})
+    except docker.errors.APIError:
+        return JsonResponse({'msg':'Image not found or wrong image name'})
