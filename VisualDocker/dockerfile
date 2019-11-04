@@ -1,0 +1,9 @@
+FROM python:3.6
+RUN mkdir -p /usr/src/visualDocker
+WORKDIR /usr/src/visualDocker
+COPY pip.conf /root/.pip/pip.conf
+COPY requirements.txt /usr/src/visualDocker
+RUN pip install -r /usr/src/visualDocker/requirements.txt
+RUN rm -rf /usr/src/visualDocker
+COPY . /usr/src/visualDocker
+CMD ["python","./manage.py","runserver","0.0.0.0:8080"]
