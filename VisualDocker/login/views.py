@@ -9,11 +9,17 @@ def index(request):
     return render(request,'login/index.html')
 
 def getClient(request):
-    serverType = request.session['type']
-    url = request.session['url']
+    #serverType = request.session['type']
+    #url = request.session['url']
+    serverType = request.GET['type']
+    print(serverType)
+    print(serverType=='local')
     if serverType == 'local':
         return docker.from_env()
     else:
+        ip = request.GET['ip']
+        port = request.GET['port']
+        url = 'tcp://' + ip + ':' + port
         return docker.DockerClient(url,timeout=3)
 
 # 连接一个Docker Server
