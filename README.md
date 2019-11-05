@@ -1,4 +1,4 @@
-# Visual Docker
+# Visual Docker (ZJU CST PaaS)
 
 ## 项目背景
 目前对Docker的操作主要是通过终端命令交互的方式，为了简化Docker的操作，让Docker命令的运行结果更加直观，方便初学者更好的了解Docker，本项目将致力于可视化Docker。
